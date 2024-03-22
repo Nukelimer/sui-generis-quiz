@@ -1,6 +1,7 @@
 "use client";
 
 import StatisticsCard from "@/components/StatisticsCard";
+import { log } from "console";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 interface Props {
@@ -83,11 +84,16 @@ function Quiz({ questions, userId }: Props) {
   const nextQuestion = () => {
     setSelectedAnswerIndex(null);
     setResults((prev) =>
+      
+    
       selectedAnswers
         ? {
-            ...prev,
+          ...prev,
+        
             score: prev.score + 5,
-            correctAnswers: prev.correctAnswers + 1,
+          correctAnswers: prev.correctAnswers + 1,
+          
+            
           }
         : {
             ...prev,
@@ -95,11 +101,13 @@ function Quiz({ questions, userId }: Props) {
           }
     );
     if (activeQuestions !== questions.length - 1) {
-      setActiveQuestions((prev) => prev + 1);
+      setActiveQuestions((prev) => prev + 1   );
+    
+      
     } else {
       setShowResults(true);
       stopTimer();
-      fetch("/api/quizResults", {
+      fetch("/api/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,6 +120,8 @@ function Quiz({ questions, userId }: Props) {
         }),
       })
         .then((response) => {
+          console.log("Debug", response);
+
           if (!response.ok) {
             throw new Error("Network response was not working fam");
           }
@@ -128,11 +138,12 @@ function Quiz({ questions, userId }: Props) {
     resetTimer();
     startTimer();
 
+    console.log(results);
+
     if (activeQuestions === questions.length - 1) {
-      setTimeRemaining(200000000000000000000000000000)
+      setTimeRemaining(200000000000000000000000000000);
     }
   };
-
 
   return (
     <div className="m-h-[500px] px-2 ">

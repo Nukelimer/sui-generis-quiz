@@ -23,7 +23,7 @@ async function getData() {
 const page = async () => {
   const questions = await getData();
 
-  console.log(questions);
+  
 
   const user = await fetchUsers();
   const userId = user?.data.user.id;

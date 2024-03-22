@@ -134,8 +134,8 @@ function Quiz({ questions, userId }: Props) {
     }
 
     setChecked(false);
+    resetTimer();
     startTimer();
-    // resetTimer();
   };
 
   return (

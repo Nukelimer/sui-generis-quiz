@@ -8,8 +8,8 @@ async function page() {
       <div className="text-center mb-10 text-2xl uppercase">
         <h1>
           {currentUser?.data?.user.username.includes("null")
-            ? "Nameless User."
-            : currentUser?.data?.user.username.split(" ")[0]}{" "}
+            ? "Nameless User's"
+            : currentUser?.data?.user.username}{" "}
           Statistics.
         </h1>
       </div>

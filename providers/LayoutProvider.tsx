@@ -10,7 +10,6 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isPublicRoute = ["sign-in", "sign-up"].includes(pathname.split("/")[1]);
 
-
   const getNavBar = () => {
     if (isPublicRoute) return null;
     return <NavBar />;
@@ -31,9 +30,9 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
       const response: any = await fetchUsers();
       if (response.error) throw new Error(response.error.message);
     } catch (error) {
-      console.log( error);
+      console.log(error);
     } finally {
-        return
+      return;
     }
   };
 
@@ -44,7 +43,7 @@ function LayoutProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className=" min-h-screen bg-primary">
+    <div className=" min-h-screen bg-slate-200 justify-between flex flex-col h-screen">
       {getNavBar()}
       {getContent()}
       {getFooter()}

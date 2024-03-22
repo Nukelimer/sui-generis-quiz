@@ -5,13 +5,13 @@ import { useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 
 const urls = [
-  { pathname: "Your Performance", path: "/perfomance" },
-  { pathname: "Leaderboard", path: "/leaderboard" },
+  { pathname: "Leaderboard", path: "/performance" },
+  { pathname: " Your Performance", path: "/statistics" },
 ];
 
 function UserMenu() {
   const [isUserMenuOpen, setisUserMenuOpen] = useState<boolean>(false);
-  console.log(isUserMenuOpen);
+
 
   return (
     <>
@@ -28,10 +28,10 @@ function UserMenu() {
           <CgMenuGridO />
 
           {isUserMenuOpen && (
-            <ul className="absolute bg-secondary z-10 top-10 sm:left-[-120px] left-[-120px] p-3 text-white rounded-md text-center text-nowrap">
+            <ul className="absolute bg-secondary z-10 top-10 sm:left-[-140px] left-[-100px] p-3 text-white rounded-md text-center text-nowrap">
               {urls.map(({ path, pathname }) => {
                 return (
-                  <li className="" key={pathname}>
+                  <li className="py-4" key={pathname}>
                     <Link
                       onClick={() => setisUserMenuOpen(false)}
                       className="hover:animate-pulse"

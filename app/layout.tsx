@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Raleway, Hedvig_Letters_Serif } from "next/font/google";
-import { ClerkProvider, UserButton } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import LayoutProvider from "@/providers/LayoutProvider";
 import "./globals.css";
+import toast, { Toaster } from "react-hot-toast";
 
 const hedvig = Hedvig_Letters_Serif({
   subsets: ["latin"],
@@ -31,8 +32,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ClerkProvider>
-        <body className={`${hedvig.className}  bg-white`}>
+        <body className={`${hedvig.className} custom-height`}>
           <LayoutProvider>{children}</LayoutProvider>
+          <Toaster />
         </body>
       </ClerkProvider>
     </html>

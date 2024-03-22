@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#ffffffff',
+        primary: '#000',
         secondary: '#2ff211',
         dark: '#0f172a'
       }

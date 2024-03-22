@@ -43,9 +43,7 @@ function Quiz({ questions, userId }: Props) {
       handleTimeUp();
     }
     return () => clearTimeout(timer);
-  }, [timeRemaining, timeRemaining]);
-
-  const computedResult = Math.round((results.score / 50) * 100);
+  }, [timerRunning, timeRemaining]);
 
   const startTimer = () => {
     setTimerRunning(true);
@@ -71,10 +69,6 @@ function Quiz({ questions, userId }: Props) {
     };
   }, []);
 
-  useEffect(() => {
-    resetTimer(); // Reset the timer whenever the active question changes
-  }, [activeQuestions]);
-
   const onAnswerSelected = (answer: string, questionIndex: number) => {
     setChecked(true);
     setSelectedAnswerIndex(questionIndex);
@@ -88,31 +82,30 @@ function Quiz({ questions, userId }: Props) {
 
   const nextQuestion = () => {
     setSelectedAnswerIndex(null);
-    setResults((previousResults: any) => {
-      return selectedAnswers
+    setResults((prev) =>
+      selectedAnswers
         ? {
-            ...previousResults,
-            score: previousResults.score + 5,
-            correctAnswers: previousResults.correctAnswers + 1,
+            ...prev,
+            score: prev.score + 5,
+            correctAnswers: prev.correctAnswers + 1,
           }
         : {
-            ...previousResults,
-            wrongAnswers: previousResults.wrongAnswers + 1,
-          };
-    });
-
+            ...prev,
+            wrongAnswers: prev.wrongAnswers + 1,
+          }
+    );
     if (activeQuestions !== questions.length - 1) {
-      setActiveQuestions((previousQuestion) => previousQuestion + 1);
+      setActiveQuestions((prev) => prev + 1);
     } else {
       setShowResults(true);
       stopTimer();
-      fetch("/api/quizResult ", {
+      fetch("/api/quizResults", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId,
+          userId: userId,
           quizScore: results.score,
           correctAnswers: results.correctAnswers,
           wrongAnswers: results.wrongAnswers,
@@ -120,23 +113,26 @@ function Quiz({ questions, userId }: Props) {
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Network is down!!");
+            throw new Error("Network response was not working fam");
           }
           return response.json();
         })
         .then((data) => {
-          console.log("result saved successfully!!");
-          data;
+          console.log("Quiz results saved successfully:", data);
         })
         .catch((error) => {
-          console.log(`error, quiz not saved due to:`, error);
+          console.error("Error saving quiz results:", error);
         });
     }
-
     setChecked(false);
-    startTimer();
     resetTimer();
+    startTimer();
+
+    if (activeQuestions === questions.length - 1) {
+      setTimeRemaining(200000000000000000000000000000)
+    }
   };
+
 
   return (
     <div className="m-h-[500px] px-2 ">
@@ -194,7 +190,6 @@ function Quiz({ questions, userId }: Props) {
                 );
 
                 nextQuestion();
-                resetTimer();
               }}
               className={` disabled:bg-red-600 flex w-fit justify-center rounded-md items-center text-white font-bold mt-6 bg-secondary py-2 px-4 ${
                 !checked && "cursor-not-allowed"
@@ -208,7 +203,10 @@ function Quiz({ questions, userId }: Props) {
           <div className="text-center">
             <h3 className="text-2xl uppercase mb-10"> Your Quiz Results</h3>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10">
-              <StatisticsCard title="Percentage" value={`${computedResult}%`} />
+              <StatisticsCard
+                title="Percentage"
+                value={`${(results.score / 50) * 100}%`}
+              />
 
               <StatisticsCard
                 title="Total Questions"

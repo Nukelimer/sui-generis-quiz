@@ -53,7 +53,7 @@ console.log(user.username)
                     
                     <span className="">
                       {user.username.split(" ").includes('null')
-                        ? "Nameless User."
+                        ? "Nameless User"
                         : user.username.split(" ")[0]}.
                     </span>
 

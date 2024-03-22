@@ -30,6 +30,8 @@ async function page() {
 
       <ol>
         {users.map((user, index) => {
+
+console.log(user.username)
           return (
             <li
               key={user.id}
@@ -47,19 +49,25 @@ async function page() {
                       alt="user"
                       className="rounded-2xl"
                     />
-                    <span className="">{user.username.split(" ")[0]}</span>
+
+                    
+                    <span className="">
+                      {user.username.split(" ").includes('null')
+                        ? "Nameless User."
+                        : user.username.split(" ")[0]}.
+                    </span>
 
                     {index === 0 && (
                       <FaCrown className="inline-block w-6 h-6 text-secondary" />
                     )}
                   </div>
                   <span>
-                    Total Quiz Score{" "}
+                    Total Quiz Score:{" "}
                     {user.quizResults.reduce(
                       (initialValue, current) =>
                         initialValue + current.quizScore,
                       0
-                    )}
+                    )}.
                   </span>
                 </div>
               </div>

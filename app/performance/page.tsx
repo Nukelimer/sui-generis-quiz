@@ -35,7 +35,7 @@ async function page() {
               key={user.id}
               className={`py-4 ${index < 3 ? "font-bold" : ""}`}>
               <div className="flex items-center gap-5 w-full">
-                <div className="flex  sm:flex-row flex-col gap-1 justify-between items-center w-full">
+                <div className="flex   sm:flex-row  gap-1 justify-between items-center w-full cursor-help">
                   <div
                     className="flex gap-3 items-center
                           ">
